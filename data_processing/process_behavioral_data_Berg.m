@@ -43,13 +43,13 @@ function processed_data = process_behavioral_data_Berg(raw_data)
     num_free_choices_big_hor = 6;
     num_games = 40; 
     % game length i.e., horion
-    horizon_type = nan(1,   num_games);
+    horizon_type = nan(num_games, 1);
     dum = sub.gameLength;
-    horizon_type(1,1:size(dum,1)) = dum;
+    horizon_type(1:size(dum,1)) = dum;
     % information difference
     dum = sub.uc - 2;
-    forced_choice_info_diff(1, 1:size(dum,1)) = -dum;
-
+    forced_choice_info_diff = nan(num_games, 1);  % preallocate as column
+    forced_choice_info_diff(1:length(dum)) = -dum;
 
  
 

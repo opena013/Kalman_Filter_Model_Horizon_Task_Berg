@@ -22,13 +22,13 @@ function [output_table] = Social_wrapper(varargin)
     
     if ispc
         root = 'L:/';
-        experiment = 'prolific'; % indicate local or prolific
-        results_dir = sprintf([root 'rsmith/lab-members/cgoldman/Wellbeing/social_media/output/test/']);
+        experiment = 'local'; % indicate local or prolific
+        results_dir = sprintf([root 'rsmith/lab-members/osanchez/wellbeing/social_media/output/']);
         if nargin > 0
             id = varargin{1};
             room = varargin{2};
         else
-            if strcmp(experiment,'prolific'); id = '568d0641b5a2c2000cb657d0'; elseif strcmp(experiment,'local'); id = 'AV841';end   % CA336 BO224 562eb896733ea000051638c6 666878a27888fdd27f529c64 
+            if strcmp(experiment,'prolific'); id = '568d0641b5a2c2000cb657d0'; elseif strcmp(experiment,'local'); id = 'BZ269';end   % CA336 BO224 562eb896733ea000051638c6 666878a27888fdd27f529c64 
             room = 'Like';
         end
         model = "KF_SIGMA_DDM"; % indicate if 'KF_UCB', 'RL', 'KF_UCB_DDM', 'KF_SIGMA_DDM', 'KF_SIGMA', 'KF_SIGMA_RACING

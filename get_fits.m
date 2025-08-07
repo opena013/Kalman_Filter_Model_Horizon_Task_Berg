@@ -1,7 +1,7 @@
 function varargout = get_fits(root, study,room_type, results_dir, MDP, id)
 timestamp = datestr(datetime('now'), 'mm_dd_yy_THH-MM-SS');
 [raw_data,raw_file_path] = get_raw_data(root,study,room_type,id);
-
+[processed_data] = process_behavioral_data_Berg(raw_data);
 
 if MDP.fit_model
     [fits, model_output] = fit_extended_model_SPM(outpath_beh, results_dir, MDP);

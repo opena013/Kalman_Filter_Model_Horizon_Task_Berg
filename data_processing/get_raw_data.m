@@ -24,29 +24,26 @@ function [raw_data,raw_file_path] = get_raw_data(root,study,room_type,id)
             error("Participant has files for CB1 and CB2");
         end
     elseif strcmp(study, 'local')
-        sink = [root 'rsmith/wellbeing/data/raw/'];
-        all_subfolders = dir(sink);
-        % Filter to find the subfolder for this ID
-        is_match = strcmp({all_subfolders.name}, ['sub-' id]) & [all_subfolders.isdir];
-        match_folder = all_subfolders(is_match);
-        for i = 1:length(match_folder)
-            file_list = dir([sink match_folder(i).name]);
-            file_list = file_list(~[file_list.isdir]);  
-            for file_idx = 1:length(file_list)
-                if ~isempty(regexp(file_list(file_idx).name, 'SM_R[0-9]-_BEH', 'once'))
-                    files = [files [sink match_folder(i).name '/' file_list(file_idx).name]];
-                end
-            end
-        end
-    
+        sink = [root '/NPC/DataSink/COBRE-NEUT/data-original/behavioral_session/'];
+        all_files = dir(fullfile(sink, '**', '*'));  % recursive search
+        all_files = all_files(~[all_files.isdir]);   % only files, not folders
+        % Check for filename matches
+        file_names = {all_files.name};
+        matches = contains(file_names, id) & contains(file_names, 'HZ') & ~contains(file_names, "PR");
+        % Show full paths of matched files
+        matched_files = fullfile({all_files(matches).folder}, {all_files(matches).name});
+        
         if length(files) > 1
             fprintf("MULTIPLE FILES FOUND FOR THIS LOCAL PARTICIPANT.");
+            file = matched_files;
+        else
+            file = matched_files;
         end
     
     end
     
     
-    [raw_data, subj_mapping, ~] = Social_merge(subs, files, room_type, study);
+    [raw_data, subj_mapping, ~] = Social_merge(subs, file, room_type, study);
     raw_file_path = subj_mapping{1,4};
     
 end
